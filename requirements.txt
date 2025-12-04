@@ -1,0 +1,24 @@
+# OpenAI Agents SDK - install from GitHub (official source)
+# git+https://github.com/openai/openai-agents-python.git
+# OR: openai-agents (from PyPI, may be outdated)
+openai>=2.0.0
+pydantic
+gradio
+python-dotenv
+# Export to Word
+python-docx
+# If you reintroduce email functionality:
+# sendgrid
+
+# Crawler runtime
+aiohttp>=3.9
+beautifulsoup4>=4.12
+lxml>=5.3
+tldextract>=5.1
+w3lib>=2.2
+
+# Testing
+pytest>=8.3
+
+# Optional: enable JS rendering for heavy websites (install browsers with `playwright install`)
+# playwright>=1.48
