@@ -1,7 +1,7 @@
 # OpenAI Agents SDK - install from GitHub (official source)
-# git+https://github.com/openai/openai-agents-python.git
+git+https://github.com/openai/openai-agents-python.git
 # OR: openai-agents (from PyPI, may be outdated)
-openai>=2.0.0
+# openai>=2.0.0
 pydantic
 gradio
 python-dotenv
