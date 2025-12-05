@@ -1,75 +1,113 @@
 # Quick Start Guide
 
-## ✅ What's Been Implemented
+## ✅ What's Implemented (Phase 1-3 Complete)
 
-All required components from your prompt have been successfully implemented:
+All core features have been implemented:
 
-1. ✅ **Website Data Extraction Agent** (PRIMARY SOURCE) - Cell 1
-2. ✅ **Content Cleaning & Structuring** - Cell 2  
-3. ✅ **JSON Knowledge Storage System** - Cell 3
-4. ✅ **Gap Detection Agent** - Cell 4
-5. ✅ **Updated Workflow Function** - Cell 8 (`run_full_research_new`)
+### Phase 1: Core Architecture ✅
+- **Smart Website Scraper** - Parallel page discovery and fetching
+- **Gap Detection Agent** - Only triggers web search when needed
+- **Reduced Web Searches** - From 15 to 5 (only for gap filling)
+- **JSON Knowledge Base** - Structured storage for chatbot context
 
-## 🔧 One Manual Update Needed
+### Phase 2: Knowledge Management ✅
+- **URL Caching** - Previously processed sites load instantly
+- **Force Refresh** - UI option to re-scrape cached sites
+- **JSON Storage** - All knowledge saved to `knowledge_files/`
 
-To complete the implementation, update the Gradio UI handler:
-
-**Find this in the Gradio UI cell (around cell 9):**
-```python
-status_text, system_prompt, name, chatbot_update, msg_update, send_btn_update = await run_full_research(
-    url, progress=progress
-)
-```
-
-**Replace with:**
-```python
-# Use the NEW workflow with website extraction as PRIMARY source
-result = await run_full_research_new(url, progress=progress)
-status_text, system_prompt, name, chatbot_update, msg_update, send_btn_update, knowledge_filepath = result
-```
-
-The `knowledge_filepath` variable contains the path to the saved JSON knowledge file (you can ignore it in the UI if not needed).
+### Phase 3: Quality Enhancements ✅
+- **Retry Logic** - 3 attempts for failed requests
+- **robots.txt Compliance** - Respects website crawling rules
+- **Rate Limiting** - Polite delays between requests
+- **Error Handling** - User-friendly error messages
 
 ## 🚀 Running the Project
 
-1. Install dependencies:
-   ```bash
-   pip install -r requirements.txt
-   ```
+### 1. Install Dependencies
 
-2. Set up your `.env` file with OpenAI API key:
-   ```
-   OPENAI_API_KEY=your_key_here
-   ```
+```bash
+# Activate your virtual environment first
+pip install -r requirements.txt
+```
 
-3. Open `main.ipynb` and run all cells in order
+### 2. Set Up Environment
 
-4. The Gradio interface will launch automatically
+Create a `.env` file:
+```
+OPENAI_API_KEY=your_openai_api_key_here
+```
 
-5. Enter a website URL and click "Start Research"
+### 3. Run the Notebook
 
-## 📊 New Workflow
+Open `main.ipynb` and run all cells in order (Cells 1-10).
 
-The system now follows this workflow:
+The Gradio UI will launch automatically at `http://127.0.0.1:7860`
 
-1. **Extract website content** (PRIMARY SOURCE) - Crawls up to 10 pages
-2. **Analyze gaps** - Determines if web search is needed
-3. **Optional web search** (SECONDARY SOURCE) - Only if gaps detected
-4. **Create JSON knowledge file** - Stores everything in `knowledge_files/`
-5. **Extract name** - Identifies the website/company name
-6. **Generate chatbot** - Uses JSON knowledge as single source of truth
+### 4. Generate a Chatbot
+
+1. Enter any website URL
+2. (Optional) Check "🔄 Force Refresh" to re-scrape cached sites
+3. Click "🚀 Generate Chatbot"
+4. Wait for processing:
+   - **First time:** 10-30 seconds
+   - **Cached:** ~1-2 seconds (instant!)
+5. Chat with your website-trained bot!
+
+## 📊 Workflow
+
+```
+URL Input
+    ↓
+Check Cache ──→ [Cached?] ──→ Load Instantly (~1-2s)
+    ↓ (not cached)
+Scrape Website (PRIMARY SOURCE)
+    ↓
+Analyze Content Gaps
+    ↓
+[Gaps Found?] ──→ Run Web Searches (SECONDARY)
+    ↓
+Build Knowledge Base (JSON)
+    ↓
+Save to Cache
+    ↓
+Prepare Chatbot
+    ↓
+Ready to Chat! 🎉
+```
 
 ## 📁 Output Files
 
-- JSON knowledge files are saved in `knowledge_files/` directory
-- Each file is named based on the URL hash
-- Files contain structured data optimized for LLM consumption
+Knowledge files are saved to `knowledge_files/`:
+- Named by URL hash (e.g., `example_com_abc123.json`)
+- Contains primary (website) and secondary (search) content
+- Enables instant reload on subsequent visits
 
 ## 🎯 Key Features
 
-- **Primary Source Priority**: Website content is always the primary source
-- **Intelligent Gap Detection**: Web search only runs when needed
-- **JSON Knowledge Base**: All data stored in structured format
-- **Source Attribution**: Clear distinction between PRIMARY and SECONDARY sources
-- **Error Handling**: Graceful handling of extraction failures
+| Feature | Description |
+|---------|-------------|
+| **Primary Source Priority** | Website content always used first |
+| **Intelligent Gap Detection** | Web search only runs when needed |
+| **JSON Caching** | Instant load for repeat visits |
+| **Polite Scraping** | Respects robots.txt, rate limits |
+| **Error Recovery** | Automatic retries, fallback to search |
+| **Source Attribution** | Clear PRIMARY vs SECONDARY labels |
+
+## ⚠️ Troubleshooting
+
+**"Module not found" errors:**
+```bash
+pip install openai-agents aiohttp beautifulsoup4 lxml gradio pydantic python-dotenv
+```
+
+**API key errors:**
+- Ensure `.env` file exists with valid `OPENAI_API_KEY`
+
+**Slow first load:**
+- Normal! First scrape takes 10-30s depending on website size
+- Subsequent loads are instant (cached)
+
+**Website blocked:**
+- Some sites block automated access
+- Try a different URL or check robots.txt
 
