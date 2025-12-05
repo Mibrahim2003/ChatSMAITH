@@ -8,6 +8,8 @@
 # OpenAI SDK and Agents
 openai>=1.0.0
 openai-agents  # OpenAI Agents SDK for multi-agent orchestration
+# Alternative: Install from GitHub if PyPI version has issues:
+# git+https://github.com/openai/openai-agents-python.git
 
 # Data Models
 pydantic>=2.0.0
@@ -22,7 +24,7 @@ python-dotenv>=1.0.0
 # Async HTTP client for fast parallel scraping
 aiohttp>=3.9.0
 
-# SSL certificates (REQUIRED for Windows)
+# SSL certificates (REQUIRED for Windows!)
 certifi>=2024.0.0
 
 # HTML parsing and content extraction
