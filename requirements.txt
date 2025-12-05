@@ -22,6 +22,9 @@ python-dotenv>=1.0.0
 # Async HTTP client for fast parallel scraping
 aiohttp>=3.9.0
 
+# SSL certificates (REQUIRED for Windows)
+certifi>=2024.0.0
+
 # HTML parsing and content extraction
 beautifulsoup4>=4.12.0
 lxml>=5.0.0
